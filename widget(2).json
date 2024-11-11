@@ -1,0 +1,64 @@
+{
+  "productDetails": {
+    "name": "test",
+    "description": "test",
+    "imageURI": ""
+  },
+  "paymentDetails": {
+    "paymentOptions": [
+      {
+        "receiverAddress": "0xF26Ce9749f29E61c25d0333bCE2301CB2DFd3a22",
+        "chainId": 8453,
+        "superToken": {
+          "address": "0x09b1AD979d093377e201d804Fa9aC0a9a07cfB0b"
+        },
+        "transferAmountEther": "1",
+        "flowRate": {
+          "amountEther": "6.99",
+          "period": "month"
+        }
+      }
+    ]
+  },
+  "type": "page",
+  "theme": {
+    "typography": {
+      "fontFamily": "'Noto Sans', 'sans-serif'"
+    },
+    "palette": {
+      "mode": "light",
+      "primary": {
+        "main": "rgb(39, 142, 238)"
+      },
+      "secondary": {
+        "main": "rgb(255, 255, 255)"
+      }
+    },
+    "shape": {
+      "borderRadius": 20
+    },
+    "components": {
+      "MuiStepIcon": {
+        "styleOverrides": {
+          "text": {
+            "fill": "rgb(255, 255, 255)"
+          }
+        }
+      },
+      "MuiOutlinedInput": {
+        "styleOverrides": {
+          "root": {
+            "borderRadius": 10
+          }
+        }
+      },
+      "MuiButton": {
+        "styleOverrides": {
+          "root": {
+            "borderRadius": 10
+          }
+        }
+      }
+    }
+  }
+}

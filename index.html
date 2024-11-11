@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Superfluid Widget</title>
+    <style>
+        body {
+            font-family: 'Noto Sans', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div id="widget-container"></div>
+
+    <script>
+        // Fetch the JSON file
+        fetch('widget(2).json')
+            .then(response => response.json())
+            .then(config => {
+                // Use the configuration to render the widget
+                document.getElementById('widget-container').innerHTML = `
+                    <h1>${config.productDetails.name}</h1>
+                    <p>${config.productDetails.description}</p>
+                    <button style="background-color: ${config.theme.palette.primary.main}; border-radius: ${config.theme.shape.borderRadius}px;">
+                        Pay Now
+                    </button>
+                `;
+            })
+            .catch(error => console.error('Error loading widget config:', error));
+    </script>
+</body>
+</html>
