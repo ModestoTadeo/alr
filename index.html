@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Superfluid Widget Integration</title>
+  <title>get out</title>
   <!-- Load required scripts for React, Superfluid, and Wagmi -->
   <script src="https://cdn.jsdelivr.net/npm/react@17/umd/react.production.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/react-dom@17/umd/react-dom.production.min.js"></script>
@@ -14,18 +14,22 @@
   <script>
     // Assume widgetConfig and wagmiConfig are defined elsewhere or loaded from widget(2).json
 
-    const { WagmiConfig } = window['wagmi'];
-    const { SuperfluidWidget } = window['@superfluid-finance/widget'];
+    import { WagmiConfig } from 'wagmi';
+    import { SuperfluidWidget } from '@superfluid-finance/widget';
 
-    function MyComponent() {
-      return React.createElement(WagmiConfig, { config: wagmiConfig },
-        React.createElement(SuperfluidWidget, { ...widgetConfig, type: "dialog" },
-          ({ openModal }) =>
-            React.createElement("button", { onClick: openModal }, "Open Superfluid Widget")
-        )
-      );
-    }
-
+    export function MyComponent() {
+        const widgetData = require('./widget(2).json'); // Load JSON data
+  
+        return (
+        <WagmiConfig config={wagmiConfig}>
+            <SuperfluidWidget {...widgetData} type="dialog">
+            {({ openModal }) => (
+                <button onClick={() => openModal()}>Open Superfluid Widget</button>
+            )}
+            </SuperfluidWidget>
+        </WagmiConfig>
+        );
+  }
     ReactDOM.render(
       React.createElement(MyComponent),
       document.getElementById("widget-root")
