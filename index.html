@@ -1,33 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Superfluid Widget</title>
-    <style>
-        body {
-            font-family: 'Noto Sans', sans-serif;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Superfluid Widget Integration</title>
+  <!-- Load required scripts for React, Superfluid, and Wagmi -->
+  <script src="https://cdn.jsdelivr.net/npm/react@17/umd/react.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@17/umd/react-dom.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@superfluid-finance/widget@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/wagmi@latest"></script>
 </head>
 <body>
-    <div id="widget-container"></div>
+  <div id="widget-root"></div>
+  <script>
+    // Assume widgetConfig and wagmiConfig are defined elsewhere or loaded from widget(2).json
 
-    <script>
-        // Fetch the JSON file
-        fetch('widget(2).json')
-            .then(response => response.json())
-            .then(config => {
-                // Use the configuration to render the widget
-                document.getElementById('widget-container').innerHTML = `
-                    <h1>${config.productDetails.name}</h1>
-                    <p>${config.productDetails.description}</p>
-                    <button style="background-color: ${config.theme.palette.primary.main}; border-radius: ${config.theme.shape.borderRadius}px;">
-                        Pay Now
-                    </button>
-                `;
-            })
-            .catch(error => console.error('Error loading widget config:', error));
-    </script>
+    const { WagmiConfig } = window['wagmi'];
+    const { SuperfluidWidget } = window['@superfluid-finance/widget'];
+
+    function MyComponent() {
+      return React.createElement(WagmiConfig, { config: wagmiConfig },
+        React.createElement(SuperfluidWidget, { ...widgetConfig, type: "dialog" },
+          ({ openModal }) =>
+            React.createElement("button", { onClick: openModal }, "Open Superfluid Widget")
+        )
+      );
+    }
+
+    ReactDOM.render(
+      React.createElement(MyComponent),
+      document.getElementById("widget-root")
+    );
+  </script>
 </body>
 </html>
