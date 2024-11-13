@@ -14,12 +14,20 @@
     async function loadWidget() {
       const response = await fetch('./widget(2).json');
       const widgetData = await response.json();
+
+      // Define a basic wagmiConfig
+      const wagmiConfig = {
+        autoConnect: true,
+        connectors: [], // Add any necessary connectors here
+        provider: new window.wagmi.providers.JsonRpcProvider({ url: "https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID" })
+      };
+
       const { WagmiConfig } = window.wagmi;
-      const { SuperfluidWidget } = window.superfluidWidget;
+      const { SuperfluidWidget } = window["@superfluid-finance/widget"];
 
       function MyComponent() {
         return (
-          React.createElement(WagmiConfig, { config: window.wagmiConfig },
+          React.createElement(WagmiConfig, { config: wagmiConfig },
             React.createElement(SuperfluidWidget, { ...widgetData, type: "dialog" }, ({ openModal }) =>
               React.createElement("button", { onClick: () => openModal() }, "Open Superfluid Widget")
             )
