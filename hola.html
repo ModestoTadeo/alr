@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conéctate con Discord</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #2C2F33;
+            color: white;
+            margin: 0;
+            padding: 50px;
+        }
+
+        .container {
+            background-color: #23272A;
+            padding: 30px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+
+        h1 {
+            color: #7289DA;
+        }
+
+        .login-btn {
+            background-color: #7289DA;
+            color: white;
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .login-btn:hover {
+            background-color: #5b6eae;
+        }
+
+        #user-info {
+            margin-top: 20px;
+        }
+
+        img {
+            border-radius: 50%;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Inicia sesión con Discord</h1>
+        <a id="login" class="login-btn">Conectar con Discord</a>
+        <div id="user-info" style="display: none;">
+            <h2>Bienvenido, <span id="username"></span>!</h2>
+            <img id="avatar" src="" alt="Avatar" width="100">
+        </div>
+    </div>
+
+    <script>
+        // Configuración de OAuth2
+        const CLIENT_ID = "TU_CLIENT_ID";  // Coloca aquí tu Client ID
+        const REDIRECT_URI = "TU_REDIRECT_URI"; // URL donde se redirige después de autenticarse
+        const AUTH_URL = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
+
+        // Botón de login
+        document.getElementById("login").href = AUTH_URL;
+
+        // Obtener token de la URL después del login
+        const fragment = new URLSearchParams(window.location.hash.slice(1));
+        const accessToken = fragment.get("access_token");
+
+        if (accessToken) {
+            // Hacer petición a la API de Discord para obtener los datos del usuario
+            fetch("https://discord.com/api/users/@me", {
+                headers: { Authorization: `Bearer ${accessToken}` }
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("user-info").style.display = "block";
+                document.getElementById("username").textContent = data.username;
+                document.getElementById("avatar").src = `https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png`;
+            })
+            .catch(console.error);
+        }
+    </script>
+
+</body>
+</html>
